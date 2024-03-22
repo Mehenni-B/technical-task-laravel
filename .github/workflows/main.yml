@@ -1,0 +1,40 @@
+name: Laravel CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull_request:
+    name: laravel-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_mysql, curl, openssl, zip, unzip
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run tests
+        run: vendor/bin/phpunit
+
+      - name: Build Laravel app
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan config:cache
+          php artisan migrate
+
+      - name: Deploy to Vercel
+        run: |
+          npm install -g vercel
+          vercel --prod --token ${{ secrets.VERCEL_AUTH_TOKEN }}  --confirm        
