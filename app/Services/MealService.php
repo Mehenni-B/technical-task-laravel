@@ -13,6 +13,11 @@ class MealService
 
     private $MEALS_API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
+    /**
+     * Fetch meals from the API endpoint.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response containing the fetched meals or an error message.
+     */
     public function fetchMeals()
     {
         try {
