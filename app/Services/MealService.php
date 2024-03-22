@@ -11,10 +11,12 @@ class MealService
 {
     use HttpResponseTrait;
 
+    private $MEALS_API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+
     public function fetchMeals()
     {
         try {
-            $response = Http::withHeaders(['Accept' => 'application/json', 'Content-Type' => 'application/json'])->get(env('MEALS_API_URL'));
+            $response = Http::withHeaders(['Accept' => 'application/json', 'Content-Type' => 'application/json'])->get(env('MEALS_API_URL', $this->MEALS_API_URL));
 
             if ($response->status() === 200) {
                 return self::successHttpResponse("Meals fetched successfully", MealResource::collection($response->collect()['meals']));
