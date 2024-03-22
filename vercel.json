@@ -1,11 +1,11 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "/(.*)",
-            "use": "@vercel/php"
+    "framework": null,
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.6.0"
         }
-    ],
+    },
     "routes": [
         {
             "src": "/(.*)",
@@ -15,7 +15,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://technical-task-laravel.app",
+        "APP_URL": "https://technical_task_laravel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
